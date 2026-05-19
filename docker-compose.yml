@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mi-mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: tatuajes_db
+      MYSQL_USER: ADMIN
+      MYSQL_PASSWORD: admin123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

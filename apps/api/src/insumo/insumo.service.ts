@@ -33,6 +33,8 @@ export class InsumoService {
 
   findAll(skip = 0, take = 20) {
     return this.prisma.insumo.findMany({
+      skip,
+      take,
       orderBy: { nombre: 'asc' },
       include: {
         procedimientos: true,
@@ -62,14 +64,14 @@ export class InsumoService {
         ...(fecha_ingreso !== undefined ? { fecha_ingreso: new Date(fecha_ingreso) } : {}),
         ...(fecha_vencimiento !== undefined ? { fecha_vencimiento: fecha_vencimiento ? new Date(fecha_vencimiento) : null } : {}),
       }
-    })
+    });
   }
 
   async remove(id: string) {
     await this.findOne(id);
     await this.prisma.insumo.delete({
       where: { id_insumo: id },
-    })
+    });
     return { ok: true };
   }
 
