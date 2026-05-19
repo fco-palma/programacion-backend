@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsDecimal, IsDateString, IsNotEmpty, IsEnum, MaxLength } from "class-validator";
+import { IsString, IsDecimal, IsDateString, IsNotEmpty, IsEnum, MaxLength, IsNumber } from "class-validator";
 import { MetodoPagoValues } from "./metodo_pago";
 import { EstadoValue } from "./estado";
 import type { MetodoPago } from "./metodo_pago";
@@ -7,7 +7,7 @@ import type { Estado } from "./estado";
 
 export class CreatePagoDto {
     @ApiProperty({ example: 45000.00, description: 'Monto del pago realizado' })
-    @IsDecimal()
+    @IsNumber({ maxDecimalPlaces: 2 })
     @IsNotEmpty()
     monto: number;
 

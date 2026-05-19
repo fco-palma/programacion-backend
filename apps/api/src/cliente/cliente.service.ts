@@ -1,7 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { PrismaService } from 'src/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ClienteService {
@@ -20,9 +21,15 @@ export class ClienteService {
         });
       });
     } catch (error) {
-      throw new InternalServerErrorException(
-        `Error al registrar el cliente: ${error.message}`,
-      )
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new ConflictException(`Ya existe un cliente con el RUT ${dto.rut_cliente}`);
+      }
+      else {
+        throw new InternalServerErrorException(
+          `Error al registrar el cliente: ${error.message}`,
+        )
+      }
+
     }
   }
 
@@ -56,7 +63,7 @@ export class ClienteService {
       where: { rut_cliente: id },
       data: {
         ...rest,
-        ...(fecha_nacimiento !== undefined ? { fecha_ingreso: new Date(fecha_nacimiento) } : {}),
+        ...(fecha_nacimiento !== undefined ? { fecha_nacimiento: new Date(fecha_nacimiento) } : {}),
       }
     });
   }

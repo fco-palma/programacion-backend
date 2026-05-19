@@ -61,7 +61,7 @@ export class PagoService {
       where: { id_pago: id },
       data: {
         ...rest,
-        ...(fecha !== undefined ? { fecha_ingreso: new Date(fecha) } : {}),
+        ...(fecha !== undefined ? { fecha: new Date(fecha) } : {}),
       }
     });
   }

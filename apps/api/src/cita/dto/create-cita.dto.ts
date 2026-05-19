@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, IsDateString, MaxLength, IsEnum } from "class-validator";
+import { IsNotEmpty, IsString, IsDateString, MaxLength, IsEnum, Matches } from "class-validator";
 import { EstadoValue } from "./estado";
 import type { Estado } from "./estado";
 
@@ -11,7 +11,8 @@ export class CreateCitaDto {
     fecha: string;
 
     @ApiProperty({ example: '14:30:00', description: 'Hora programada para la cita (formato HH:MM:SS)' })
-    @IsString() // Las horas en formato TIME de bases de datos relacionales viajan como texto en el JSON
+    @Matches(/^\d{2}:\d{2}$/, { message: 'hora debe tener formato HH:MM' })
+    @IsString()
     @IsNotEmpty()
     hora: string;
 
