@@ -1,0 +1,25 @@
+{
+  "name": "tienda-mascotas-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend base para TiendaMascotas",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "db:setup": "node scripts/migrate.js",
+    "admin:create": "node scripts/createAdmin.js",
+    "test:smoke": "node scripts/smokeTest.js",
+    "check": "node --check app.js && node --check routes/authRoutes.js && node --check routes/cartRoutes.js && node --check routes/categoryRoutes.js && node --check routes/favoriteRoutes.js && node --check routes/orderRoutes.js && node --check routes/productRoutes.js && node --check routes/uploadRoutes.js && node --check routes/settingsRoutes.js && node --check routes/announcementRoutes.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^4.22.2",
+    "pg": "^8.22.0"
+  },
+  "main": "app.js",
+  "type": "commonjs",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
